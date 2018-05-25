@@ -43,6 +43,24 @@ class ViewController: UITableViewController {
     
     }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
+            let task = self.tasklist[indexPath.row]
+            self.tasklist.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            //delete from core data
+            let context = CoreDataManager.shared.persistantContainer.viewContext
+            context.delete(task)
+            do{
+                try context.save()
+            }catch let  saveErr{
+                print("Issue saving: ", saveErr)
+            }
+
+        }
+        return [deleteAction]
+    }
+    
     func setupNavBar(){
         
         view.backgroundColor = .red
