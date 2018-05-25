@@ -8,17 +8,39 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
+    
+    let tasklist = [Task]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        setupNavBar()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellId")
     }
+    
+    func setupNavBar(){
+        
+        view.backgroundColor = .red
+        navigationController?.navigationBar.tintColor  = .white
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.barTintColor = .green
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        navigationItem.title = "Things To Do"
+        
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath)
+        cell.textLabel?.text = "text"
+        return cell
+    }
+    
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }
